@@ -1,5 +1,6 @@
-title: yili-soc
-description: Detection and incident response notes from a SOC analyst, based on security conference talks.
+title: Yi Li
+tagline: security notes
+description: Notes on threat detection and incident response.
 theme: minima
 markdown: kramdown
 
@@ -8,6 +9,8 @@ plugins:
   - jekyll-seo-tag
 
 github_username: yili-soc
+linkedin_username: yilisoc
+email: yilisecurity@gmail.com
 show_excerpts: true
 
 minima:

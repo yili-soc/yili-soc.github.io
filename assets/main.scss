@@ -61,26 +61,45 @@ hr { border: 0; border-top: 1px solid $border; margin: $spacing-unit * 1.5 0; }
 
 .site-title,
 .site-title:visited {
-  font-family: $mono-font-family;
-  font-size: 18px;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 60px;
+  line-height: 60px;
   letter-spacing: 0;
   color: #f1f5f9;
-  line-height: 60px;
-
-  &::before { content: "~/"; color: $muted; font-weight: 400; }
-  &::after {
-    content: "_";
-    color: $accent;
-    margin-left: 2px;
-    animation: cursor-blink 1.1s steps(1) infinite;
-  }
-  &:hover { color: $accent; text-decoration: none; }
+  &:hover { text-decoration: none; color: #fff; .brand-mark { background: $accent; color: $bg; } }
 }
 
-@keyframes cursor-blink { 50% { opacity: 0; } }
-@media (prefers-reduced-motion: reduce) {
-  .site-title::after { animation: none; }
+.brand-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid $accent;
+  border-radius: 7px;
+  font-family: $mono-font-family;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  color: $accent;
+  transition: background .15s ease, color .15s ease;
+}
+
+.brand-name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.brand-sub {
+  font-family: $mono-font-family;
+  font-size: 13px;
+  color: $muted;
+  line-height: 1;
+  padding: 3px 0 3px 10px;
+  border-left: 1px solid $border;
+  @include media-query($on-palm) { display: none; }
 }
 
 .site-nav {
@@ -91,6 +110,7 @@ hr { border: 0; border-top: 1px solid $border; margin: $spacing-unit * 1.5 0; }
     font-size: 14px;
     color: $muted;
     &:hover { color: $accent; text-decoration: none; }
+    &.active { color: #f1f5f9; }
   }
 
   @include media-query($on-palm) {
@@ -105,25 +125,12 @@ hr { border: 0; border-top: 1px solid $border; margin: $spacing-unit * 1.5 0; }
 // ---------- Home ----------
 .home .page-heading { display: none; }   // title is only used for the nav link
 
-.hero {
-  padding: $spacing-unit * 1.5 0 $spacing-unit;
-  margin-bottom: $spacing-unit;
+.home-intro {
+  color: $muted;
+  font-size: 17px;
+  padding: $spacing-unit * 1.25 0 $spacing-unit;
+  margin: 0 0 $spacing-unit;
   border-bottom: 1px solid $border;
-
-  .hero-kicker {
-    font-family: $mono-font-family;
-    font-size: 13px;
-    color: $accent;
-    letter-spacing: 0.04em;
-    margin-bottom: 12px;
-  }
-  h1 {
-    font-size: 36px;
-    line-height: 1.2;
-    margin-bottom: 16px;
-    @include media-query($on-palm) { font-size: 28px; }
-  }
-  p { color: $muted; font-size: 17px; max-width: 620px; margin-bottom: 0; }
 }
 
 .post-list-heading {
@@ -368,9 +375,44 @@ blockquote {
   .footer-row {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     justify-content: space-between;
     gap: 8px 24px;
   }
+  .social-icons { margin: 0; }
+  .social-icons a { width: 32px; height: 32px; }
+  .social-icons svg { width: 16px; height: 16px; }
   a, a:visited { color: $muted; }
   a:hover { color: $accent; text-decoration: none; }
 }
+
+// ---------- Social icon links ----------
+.social-icons {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  margin: $spacing-unit 0 0;
+  padding: 0;
+
+  li { margin: 0; }
+  a, a:visited {
+    display: inline-grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid $border;
+    border-radius: 10px;
+    background: $surface;
+    color: $muted;
+    transition: color .15s ease, border-color .15s ease, transform .15s ease;
+  }
+  a:hover {
+    color: $accent;
+    border-color: rgba($accent, 0.6);
+    transform: translateY(-1px);
+    text-decoration: none;
+  }
+  svg { width: 18px; height: 18px; fill: currentColor; }
+}
+
+.post-content .social-icons { margin-left: 0; }

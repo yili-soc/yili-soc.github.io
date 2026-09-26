@@ -2,14 +2,7 @@
   <div class="wrapper">
     <div class="footer-row">
       <span>&copy; {{ site.time | date: "%Y" }} {{ site.title | escape }} &middot; views are my own</span>
-      <span>
-        {%- if site.github_username -%}
-        <a href="https://github.com/{{ site.github_username | cgi_escape | escape }}">github</a>
-        {%- endif -%}
-        {%- if site.linkedin_username -%}
-        &nbsp;&middot;&nbsp;<a href="https://www.linkedin.com/in/{{ site.linkedin_username | cgi_escape | escape }}">linkedin</a>
-        {%- endif -%}
-      </span>
+      {%- include social-icons.html -%}
     </div>
   </div>
 </footer>
