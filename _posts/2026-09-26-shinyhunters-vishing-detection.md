@@ -3,6 +3,7 @@ layout: post
 title: "Detecting the ShinyHunters Vishing Attack Chain in Microsoft Sentinel"
 date: 2026-09-26
 tags: [ShinyHunters, vishing, identity, SaaS, Microsoft Sentinel, KQL, incident response]
+excerpt: "How the 2026 ShinyHunters vishing campaign went from one phone call to SaaS data theft, and four Microsoft Sentinel detections, with KQL, to catch it."
 ---
 
 ## 0. Introduction
@@ -12,6 +13,7 @@ This post is based on a talk at BSides Edmonton 2026 by [Damien Miller-McAndrews
 The talk focused on how the attacks worked and what a vendor saw. This post adds the other half: **how to detect and respond to this kind of attack in Microsoft Sentinel.** The talk covered three cases. This post covers the first one: the voice phishing (vishing) campaign run by ShinyHunters in 2026.
 
 > **Disclaimer**
+>
 > - The views in this post are my own and do not represent my employer.
 > - All incident details come from public sources, which are linked in the text. I am not affiliated with Obsidian Security.
 > - The KQL queries were tested in a personal lab. Adjust and validate them for your own environment before using them in production.
@@ -87,7 +89,7 @@ The queries use **Microsoft Entra ID** logs (`SigninLogs`, `AADNonInteractiveUse
 
 **KQL:** `ResultType` only counts wrong passwords (50126) and failed MFA (500121). A normal Entra sign-in also produces some non-zero interim codes, so counting every non-zero code as a failure would create a lot of false positives.
 
-```
+```kql
 let lookback = 1d;
 let SuspiciousLogins = SigninLogs
 | where TimeGenerated > ago(lookback)
@@ -115,7 +117,7 @@ AuditLogs
 
 **Idea:** AitM steals the session cookie issued after login, and the attacker uses it on their own machine. As a result, the same `SessionId` shows up in two places: the IP of the phishing proxy and the attacker's own IP. A real-time panel does not leave this trace, because the attacker uses their own session from start to finish, which is also why the panel is harder to detect. After a cookie is replayed, most follow-up requests are logged as non-interactive sign-ins, so you need to query `AADNonInteractiveUserSignInLogs` too. Querying only `SigninLogs` will miss them.
 
-```
+```kql
 union SigninLogs, AADNonInteractiveUserSignInLogs
 | where TimeGenerated > ago(1d)
 | where ResultType == "0" and isnotempty(SessionId)
@@ -138,7 +140,7 @@ union SigninLogs, AADNonInteractiveUserSignInLogs
 
 **Idea:** this detection point rests on an assumption: **once attackers have an identity, they will quickly find out which systems it can reach.** Normal employees use a fairly fixed set of apps each day. An account that opens eight or nine apps one after another within half an hour looks more like someone mapping out access.
 
-```
+```kql
 SigninLogs
 | where TimeGenerated > ago(1d)
 | where ResultType == "0"
@@ -157,7 +159,7 @@ SigninLogs
 
 **Idea:** this detection point also rests on an assumption: **attackers will grab the data as fast as they can before they are caught.** Download volume alone is noisy, and by the time it fires the data is often already gone. But if the bulk download happens on an account that "just registered a new MFA method", the signal is much stronger.
 
-```
+```kql
 let MfaReg = AuditLogs
 | where TimeGenerated > ago(1d)
 | where OperationName in ("User registered security info", "User registered all required security info")

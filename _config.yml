@@ -3,7 +3,15 @@ description: Detection and incident response notes from a SOC analyst, based on 
 theme: minima
 markdown: kramdown
 
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
 github_username: yili-soc
+show_excerpts: true
+
+minima:
+  date_format: "%b %-d, %Y"
 
 header_pages:
   - index.md
