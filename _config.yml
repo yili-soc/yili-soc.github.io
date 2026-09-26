@@ -1,0 +1,13 @@
+title: yili-soc
+description: Detection and incident response notes from a SOC analyst, based on security conference talks.
+theme: minima
+markdown: kramdown
+
+github_username: yili-soc
+
+header_pages:
+  - index.md
+  - about.md
+
+exclude:
+  - README.md
