@@ -2,7 +2,7 @@
 layout: post
 title: "From DNS Takeover to Atlassian Org Admin: Detection and Response in Microsoft Sentinel"
 date: 2026-09-26 18:00:00 -0600
-tags: [BSidesEdmonton2026, Atlassian, DNS, SaaS, Microsoft Sentinel, KQL, incident response]
+tags: [BSidesEdmonton2026, detection, Atlassian, DNS, SaaS, Microsoft Sentinel, KQL, incident response]
 excerpt: "How an attacker who controlled a company's DNS used Atlassian's own domain verification to become org admin, and how to detect it when identity logs show nothing."
 ---
 

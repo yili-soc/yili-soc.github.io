@@ -2,7 +2,7 @@
 layout: post
 title: "When the Vendor Is the Way In: Detecting Abused SaaS Integrations in Microsoft Sentinel"
 date: 2026-09-26 20:00:00 -0600
-tags: [BSidesEdmonton2026, supply chain, OAuth, SaaS, Microsoft Sentinel, KQL, incident response]
+tags: [BSidesEdmonton2026, detection, supply chain, OAuth, SaaS, Microsoft Sentinel, KQL, incident response]
 excerpt: "Attackers breached Klue, stole the OAuth tokens its customers had granted, and pulled their Salesforce data. How to spot a trusted integration that has changed hands."
 ---
 

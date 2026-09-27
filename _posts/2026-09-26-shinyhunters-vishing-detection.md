@@ -2,7 +2,7 @@
 layout: post
 title: "Detecting the ShinyHunters Vishing Attack Chain in Microsoft Sentinel"
 date: 2026-09-26
-tags: [BSidesEdmonton2026, ShinyHunters, vishing, identity, SaaS, Microsoft Sentinel, KQL, incident response]
+tags: [BSidesEdmonton2026, detection, ShinyHunters, vishing, identity, SaaS, Microsoft Sentinel, KQL, incident response]
 excerpt: "How the 2026 ShinyHunters vishing campaign went from one phone call to SaaS data theft, and four Microsoft Sentinel detections, with KQL, to catch it."
 ---
 
