@@ -3,6 +3,7 @@ tagline: security notes
 description: Notes on threat detection and incident response.
 theme: minima
 markdown: kramdown
+timezone: America/Edmonton
 
 plugins:
   - jekyll-feed
