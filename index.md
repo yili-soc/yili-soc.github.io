@@ -1,6 +1,6 @@
 ---
 layout: home
-title: Articles
+nav_title: Articles
 list_title: Latest
 ---
 
