@@ -2,13 +2,13 @@
 layout: post
 title: "Detecting the ShinyHunters Vishing Attack Chain in Microsoft Sentinel"
 date: 2026-09-26
-tags: [ShinyHunters, vishing, identity, SaaS, Microsoft Sentinel, KQL, incident response]
+tags: [BSidesEdmonton2026, ShinyHunters, vishing, identity, SaaS, Microsoft Sentinel, KQL, incident response]
 excerpt: "How the 2026 ShinyHunters vishing campaign went from one phone call to SaaS data theft, and four Microsoft Sentinel detections, with KQL, to catch it."
 ---
 
 ## 0. Introduction
 
-This post is based on a talk at BSides Edmonton 2026 by [Damien Miller-McAndrews](https://www.linkedin.com/in/damien-miller-mcandrews/), a threat researcher at Obsidian Security. He walked through three real cases to make one point: many SaaS breaches today use no exploits and no malware. Attackers simply abuse legitimate features and identity trust.
+This post is based on the BSides Edmonton 2026 talk *Advanced SaaS Threats: Case Studies from the Field* by [Damien Miller-McAndrews](https://www.linkedin.com/in/damien-miller-mcandrews/), a threat researcher at Obsidian Security. He walked through three real cases to make one point: many SaaS breaches today use no exploits and no malware. Attackers simply abuse legitimate features and identity trust.
 
 The talk focused on how the attacks worked and what a vendor saw. This post adds the other half: **how to detect and respond to this kind of attack in Microsoft Sentinel.** The talk covered three cases. This post covers the first one: the voice phishing (vishing) campaign run by ShinyHunters in 2026.
 
