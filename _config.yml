@@ -1,6 +1,6 @@
 title: All About Security
 author: Yi Li
-description: Notes on threat detection and incident response.
+description: Write-ups on detecting and responding to real-world attacks in Microsoft Sentinel.
 theme: minima
 markdown: kramdown
 timezone: America/Edmonton
@@ -23,3 +23,9 @@ header_pages:
 
 exclude:
   - README.md
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/images/og-image.png
