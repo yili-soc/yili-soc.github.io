@@ -115,13 +115,16 @@ AuditLogs
 
 ### Detection point 2: the same session from multiple IPs / countries (AitM)
 
-**Idea:** AitM steals the session cookie issued after login, and the attacker uses it on their own machine. As a result, the same `SessionId` shows up in two places: the IP of the phishing proxy and the attacker's own IP. A real-time panel does not leave this trace, because the attacker uses their own session from start to finish, which is also why the panel is harder to detect. After a cookie is replayed, most follow-up requests are logged as non-interactive sign-ins, so you need to query `AADNonInteractiveUserSignInLogs` too. Querying only `SigninLogs` will miss them.
+**Idea:** AitM steals the session cookie issued after login, and the attacker uses it on their own machine. As a result, the same `SessionId` shows up in two places: the IP of the phishing proxy and the attacker's own IP. A real-time panel does not leave this trace, because the attacker uses their own session from start to finish, which is also why the panel is harder to detect. After a cookie is replayed, most follow-up requests are logged as non-interactive sign-ins, so you need to query `AADNonInteractiveUserSignInLogs` too. Querying only `SigninLogs` will miss them. Note that `LocationDetails` is a dynamic field in `SigninLogs` but a string in `AADNonInteractiveUserSignInLogs`, so the country is extracted from each table before the `union`.
 
 ```kql
-union SigninLogs, AADNonInteractiveUserSignInLogs
+union
+    (SigninLogs
+    | extend Country = tostring(LocationDetails.countryOrRegion)),
+    (AADNonInteractiveUserSignInLogs
+    | extend Country = tostring(parse_json(LocationDetails).countryOrRegion))
 | where TimeGenerated > ago(1d)
 | where ResultType == "0" and isnotempty(SessionId)
-| extend Country = tostring(parse_json(tostring(LocationDetails)).countryOrRegion)
 | summarize
     IPs = dcount(IPAddress),
     Countries = dcount(Country),
