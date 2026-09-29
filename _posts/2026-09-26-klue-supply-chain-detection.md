@@ -40,9 +40,13 @@ The customers did nothing wrong. At some point they authorized Klue to access Sa
 
 ### ① The vendor is breached (invisible to customers)
 
+**ATT&CK:** [T1528](https://attack.mitre.org/techniques/T1528/) Steal Application Access Token (on the vendor side)
+
 The attacker used a dormant credential at Klue that had never been cleaned up, got into the backend, planted code, and collected customers' OAuth tokens. According to the talk, that credential was a GitHub personal access token (PAT) that had been alive for about four years. This step happens inside the vendor. Customers can't see it and can't detect it.
 
 ### ② Stolen tokens used against customers' Salesforce
+
+**ATT&CK:** [T1550.001](https://attack.mitre.org/techniques/T1550/001/) Application Access Token
 
 This is the first step customers can see, and it left a clear change in the integration's "fingerprint" (Obsidian, Huntress):
 
@@ -52,9 +56,13 @@ This is the first step customers can see, and it left a clear change in the inte
 
 ### ③ Discovery
 
+**ATT&CK:** [T1526](https://attack.mitre.org/techniques/T1526/) Cloud Service Discovery (closest fit, my mapping)
+
 The attacker first called Salesforce's Global Describe to list every object in the org. A normal business integration only reads the few objects it needs and almost never enumerates everything.
 
 ### ④ Bulk export
+
+**ATT&CK:** [T1213.004](https://attack.mitre.org/techniques/T1213/004/) Customer Relationship Management Software · [T1020](https://attack.mitre.org/techniques/T1020/) Automated Exfiltration
 
 The attacker ran bulk SOQL queries against objects such as Account, Contact, Opportunity, and Task, then paged through the results with QueryMore to pull everything out. In the worst-hit organization, about 13.9 million records were exported.
 
@@ -160,3 +168,4 @@ The way in was the vendor, so everything the customer can detect happens after t
 - BleepingComputer: [Klue OAuth breach linked to 'Icarus' Salesforce data theft attacks](https://www.bleepingcomputer.com/news/security/klue-oauth-breach-linked-to-icarus-salesforce-data-theft-attacks/)
 - FINRA: [Cybersecurity Alert: Klue OAuth Breach and Salesforce Data Exfiltration](https://www.finra.org/rules-guidance/guidance/cybersecurity-alert-klue-oauth-breach-and-salesforce-data-exfiltration)
 - Microsoft Learn: [Access Microsoft Graph activity logs](https://learn.microsoft.com/graph/microsoft-graph-activity-logs-overview)
+- MITRE ATT&CK: technique IDs in this post are mapped to [ATT&CK v19](https://attack.mitre.org/resources/versions/). Steps with no close match are left unmapped.

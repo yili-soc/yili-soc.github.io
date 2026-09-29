@@ -44,6 +44,8 @@ An employee gets a call from someone claiming to be from the company's IT depart
 
 ### ① Initial access: vishing + real-time phishing tools
 
+**ATT&CK:** [T1684.001](https://attack.mitre.org/techniques/T1684/001/) Impersonation · [T1598.004](https://attack.mitre.org/techniques/T1598/004/) Spearphishing Voice · [T1608.005](https://attack.mitre.org/techniques/T1608/005/) Link Target · [T1078.004](https://attack.mitre.org/techniques/T1078/004/) Cloud Accounts · AitM variant: [T1539](https://attack.mitre.org/techniques/T1539/) Steal Web Session Cookie, [T1550.004](https://attack.mitre.org/techniques/T1550/004/) Web Session Cookie
+
 Two kinds of phishing tools are common in this type of attack, and they affect detection differently:
 
 - **AitM (Adversary-in-the-Middle) reverse proxy**: the phishing site automatically forwards the employee's input to the real login page, then steals the session cookie issued after a successful login and uses it somewhere else. The same session shows up from two locations, which can be detected.
@@ -55,11 +57,15 @@ In this campaign, ShinyHunters used a real-time operator panel ([Push Security](
 
 ### ② Persistence: registering the attacker's own MFA device
 
+**ATT&CK:** [T1098.005](https://attack.mitre.org/techniques/T1098/005/) Device Registration
+
 Right after logging in, the attacker registers a new MFA device on the account. This turns "needs the employee's help" into "can act alone". **This is the key step in the whole chain.**
 
 **Log evidence:** in Obsidian's incidents, the new device was named "Passkey", and the User-Agent contained `Genymobile` (an Android emulator), which shows the device was not a real phone.
 
 ### ③ Discovery: mapping access through the SSO portal
+
+**ATT&CK:** [T1538](https://attack.mitre.org/techniques/T1538/) Cloud Service Dashboard (closest fit, my mapping)
 
 The attacker opens the SSO portal and clicks through the apps the account can reach, to see which systems are available.
 
@@ -67,9 +73,11 @@ The attacker opens the SSO portal and clicks through the apps the account can re
 
 ### ④ Exfiltration: bulk downloads
 
+**ATT&CK:** [T1530](https://attack.mitre.org/techniques/T1530/) Data from Cloud Storage (Google Drive) · [T1213.005](https://attack.mitre.org/techniques/T1213/005/) Messaging Applications (Slack)
+
 In one of Obsidian's incidents, the attacker downloaded a large number of files from Google Drive over about 90 minutes. In another, the attacker downloaded several files from Slack within seconds of each other, which points to a script rather than a person.
 
-### ⑤ Defense evasion: leaving the security channel
+### ⑤ Evasion: leaving the security channel
 
 In one incident, the compromised account left the company's Slack security channel and rejoined a few minutes later, probably to lower the chance of being noticed.
 
@@ -266,3 +274,4 @@ This is my own view: the end goal of this attack is data, so two groups of accou
 - Rescana: [ADT Salesforce Data Breach 2026: ShinyHunters Compromise Okta SSO via Vishing Attack](https://www.rescana.com/post/adt-salesforce-data-breach-2026-shinyhunters-compromise-okta-sso-via-vishing-attack)
 - The Hacker News: [Mandiant Finds ShinyHunters-Style Vishing Attacks Stealing MFA to Breach SaaS Platforms](https://thehackernews.com/2026/01/mandiant-finds-shinyhunters-using.html)
 - Huntress: [ShinyHunters Threat Actor Profile](https://www.huntress.com/threat-library/threat-actors/shinyhunters)
+- MITRE ATT&CK: technique IDs in this post are mapped to [ATT&CK v19](https://attack.mitre.org/resources/versions/). Steps with no close match are left unmapped.

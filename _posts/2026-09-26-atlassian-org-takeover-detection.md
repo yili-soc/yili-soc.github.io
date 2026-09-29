@@ -44,6 +44,8 @@ The attacker first took control of the victim company's domain. Instead of attac
 
 ### ① Taking control of DNS
 
+**ATT&CK:** [T1584.001](https://attack.mitre.org/techniques/T1584/001/) Compromise Infrastructure: Domains
+
 The public blog post doesn't say how the attacker gained control of DNS. According to the talk, in this case the attacker social-engineered the domain registrar to get control of the domain, then changed the NS and MX records. Changing MX meant that all of the victim's inbound email also went to the attacker.
 
 In general, there are a few ways in, and what defenders can see differs for each:
@@ -62,11 +64,15 @@ The attacker adds the victim's domain to their own Atlassian organization and wr
 
 ### ③ Joining the victim's organization as admin
 
+**ATT&CK:** [T1098.003](https://attack.mitre.org/techniques/T1098/003/) Additional Cloud Roles
+
 According to the talk, the attacker used an external email account that was not on the victim's domain, so the victim's SSO and domain policies had no control over it.
 
 **Evidence:** a `joined-as-org-admin` event in the victim organization's audit log. Obsidian notes that this event is only triggered by the shadow IT workflow and is very rare in normal use.
 
 ### ④ Taking over and persisting
+
+**ATT&CK:** [T1531](https://attack.mitre.org/techniques/T1531/) Account Access Removal · [T1098.001](https://attack.mitre.org/techniques/T1098/001/) Additional Cloud Credentials (API key)
 
 The attacker removes the legitimate admins and locks the defenders out. According to the talk, the attacker also created an org-level API key and deleted a security policy that prevented data export. The API key doesn't depend on a user account, so deleting the attacker's account doesn't revoke it.
 
@@ -182,3 +188,4 @@ If the trust rests on nothing more than a DNS record, that could be where the ne
 - Atlassian Support: [Verify a domain to manage accounts](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/)
 - Atlassian Support: [What are my options for shadow IT apps?](https://support.atlassian.com/organization-administration/docs/how-to-work-with-admins-of-discovered-products/)
 - Atlassian Support: [What activities does the audit log include?](https://support.atlassian.com/security-and-access-policies/docs/accessing-audit-log-activities/)
+- MITRE ATT&CK: technique IDs in this post are mapped to [ATT&CK v19](https://attack.mitre.org/resources/versions/). Steps with no close match are left unmapped.
