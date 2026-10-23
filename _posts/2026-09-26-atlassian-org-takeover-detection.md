@@ -84,7 +84,7 @@ The security team removes the attacker, the attacker comes back through Join as 
 
 ## 3. Detection approach and KQL
 
-What sets this case apart: **the attack doesn't start in the identity system; it starts in DNS.** Every step the attacker takes in Atlassian is a normal use of a legitimate feature, so sign-in and identity-based detections are of almost no use. Detection has to cover two layers: whether DNS itself has been changed, and whether Atlassian shows admin actions that only this kind of attack would trigger.
+What sets this case apart: **the attack starts in DNS.** Every step the attacker takes in Atlassian is a normal use of a legitimate feature, so sign-in and identity-based detections are of almost no use. Detection has to cover two layers: whether DNS itself has been changed, and whether Atlassian shows admin actions that only this kind of attack would trigger.
 
 **About the log sources:** the Atlassian connectors in the Sentinel Content hub mainly collect Confluence and Jira product audit logs. The org-level admin log that detection point 2 needs has to be brought in yourself through the events endpoint of the Atlassian Organizations API (for example with a Logic App or the Codeless Connector Platform), and it requires an Atlassian Guard subscription. Detection point 1 also needs a collection job you build yourself. The custom table and field names below are examples only; use whatever your ingestion produces.
 
@@ -152,7 +152,7 @@ If detection point 2 fires, or detection point 1 shows an NS or MX change that c
 
 ### Is automation needed?
 
-This case shows one thing clearly: **automation doesn't fix the root cause.** As long as the way in stays open, automatically kicking the attacker out of Atlassian just hands the tug of war to a machine, and the attacker still comes back. Here, the value of automation is mainly faster detection and faster context. The actual response depends on a plan prepared in advance.
+This case shows one thing clearly: **automation doesn't fix the root cause.** As long as the way in stays open, automatically kicking the attacker out of Atlassian doesn't end the tug of war. The attacker still comes back. Here, the value of automation is mainly faster detection and faster context. The actual response depends on a plan prepared in advance.
 
 | Tier | Actions | Impact and reversibility |
 |---|---|---|
@@ -178,7 +178,7 @@ Many SaaS platforms let you verify a domain through DNS and claim the accounts u
 2. What makes it trust that the person using it is legitimate?
 3. How cheap is it to compromise that trust?
 
-If the trust rests on nothing more than a DNS record, that could be where the next case like this happens.
+If the answer to question 2 is just a DNS record, that feature deserves a closer look.
 
 ---
 

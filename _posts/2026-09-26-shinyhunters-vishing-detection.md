@@ -229,7 +229,7 @@ When confirming, reach the user **out of band** (for example by phone, not throu
 
 ### Is automation needed?
 
-In one of Obsidian's incidents, the attacker downloaded a large number of files from Google Drive in about 90 minutes. A typical manual response chain looks like this: L1 analyst reviews the alert → escalates to L2 → contacts the client → client approves → action is taken. That chain often takes hours. **No matter how fast the detection is, if the response can't keep up, the data still leaves.** This was a recurring point in the talk: detection is not enough; what matters is cutting containment time. So it makes sense to set up some automated playbooks. But not every action should run automatically. The deciding factor is **how much the action affects the business and whether it can be undone if it's wrong**. The table below is a design idea, not a full implementation:
+In one of Obsidian's incidents, the attacker downloaded a large number of files from Google Drive in about 90 minutes. A typical manual response chain looks like this: L1 analyst reviews the alert → escalates to L2 → contacts the client → client approves → action is taken. That chain often takes hours. **A fast detection doesn't help much if the response takes hours, because the data is gone by then.** The talk came back to this point several times: you need to cut the time it takes to contain the account. So it makes sense to set up some automated playbooks. But not every action should run automatically. The deciding factor is **how much the action affects the business and whether it can be undone if it's wrong**. The table below is a design idea, not a full implementation:
 
 | Tier | Actions | Impact and reversibility |
 |---|---|---|
@@ -239,16 +239,16 @@ In one of Obsidian's incidents, the attacker downloaded a large number of files 
 
 Automatically revoking sessions has one easy-to-miss limit: **it only works at the IdP layer.** Access tokens already issued stay valid until they expire (except in apps that support CAE). And the apps the attacker reached through SSO, such as Salesforce, Slack, and Google Drive, each keep their own sessions. Revoking the IdP session does not kick the attacker out of them. So after the playbook revokes sessions, you still need to go through the app list from detection point 3 and end the user's session in each app.
 
-The real challenge here is process, not technology: **pre-authorization has to be agreed with the client before an incident happens.**
+The hard part here is the process: **pre-authorization has to be agreed with the client before an incident happens.**
 
 ---
 
 ## 5. Summary
 
-- This attack does not rely on vulnerabilities. It relies on **tricking someone out of their identity**. SSO lets one identity reach every app, which also concentrates the attack surface on that one identity.
+- This attack uses no vulnerabilities. The attacker **tricks someone into handing over their identity**. SSO lets one identity reach every app, which also concentrates the attack surface on that one identity.
 - Each step in the chain looks normal on its own. The key to detection is **linking the actions by user and time**, especially the "abnormal login → new MFA registration" sequence.
 - The step most often missed during response is **deleting the MFA device the attacker registered**. Changing the password is not enough.
-- Detection is about finding the attack; containment speed decides how much damage is done. Low-risk information gathering can be fully automated; high-impact response actions need pre-authorization agreed with the business in advance to move faster.
+- How much damage is done depends on how fast you contain the account, not just on how fast you detect it. Low-risk information gathering can be fully automated; high-impact response actions need pre-authorization agreed with the business in advance to move faster.
 
 ### Further discussion: what if the attacker changes tactics
 
