@@ -26,6 +26,20 @@ layout: default
   <div class="post-content e-content" itemprop="articleBody">
     {{ content }}
   </div>
+  <script>
+    // Wide screenshots are hard to read at column width: click opens the full-size image.
+    document.querySelectorAll(".post-content img").forEach(function (img) {
+      if (img.closest("a")) return;
+      var a = document.createElement("a");
+      a.href = img.src;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.className = "img-link";
+      a.title = "Open full size";
+      img.parentNode.insertBefore(a, img);
+      a.appendChild(img);
+    });
+  </script>
 
   <a class="back-link" href="{{ "/" | relative_url }}">&larr; All articles</a>
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>

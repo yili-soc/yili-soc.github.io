@@ -2,61 +2,137 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
-// ---------- Palette & type (set before importing minima) ----------
-$bg:          #0d1319;
-$surface:     #141c25;
-$surface-2:   #0a0f14;
-$border:      #233040;
-$text:        #d6dee8;
-$muted:       #8a97a8;
-$accent:      #3ddc97;   // terminal green
-$link:        #5cc8e6;   // cyan
-
+// ---------- Minima compile-time settings ----------
+// Minima only needs Sass values to compile. All real colours come from the
+// CSS variables below, so the light/dark switch happens at runtime.
 $base-font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 $mono-font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 $base-font-size:   16px;
 $base-line-height: 1.7;
-$text-color:       $text;
-$background-color: $bg;
-$brand-color:      $link;
-$grey-color:       $muted;
-$grey-color-light: $border;
+$text-color:       #d6dee8;
+$background-color: #0d1319;
+$brand-color:      #5cc8e6;
+$grey-color:       #8a97a8;
+$grey-color-light: #233040;
 $grey-color-dark:  #c4ceda;
-$content-width:    780px;
+$content-width:    860px;
 
 @import "minima";
+
+// ---------- Theme palettes ----------
+// Dark is the default. The inline script in head.html sets data-theme
+// from the saved choice, or from the OS setting on first visit.
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg:          #0d1319;
+  --bg-glass:    rgba(13, 19, 25, 0.85);
+  --surface:     #141c25;
+  --surface-2:   #0a0f14;
+  --border:      #233040;
+  --text:        #d6dee8;
+  --muted:       #8a97a8;
+  --heading:     #f1f5f9;
+  --strong:      #eef3f8;
+  --accent:      #3ddc97;
+  --accent-08:   rgba(61, 220, 151, 0.08);
+  --accent-05:   rgba(61, 220, 151, 0.05);
+  --accent-25:   rgba(61, 220, 151, 0.25);
+  --accent-55:   rgba(61, 220, 151, 0.55);
+  --selection:   rgba(61, 220, 151, 0.28);
+  --link:        #5cc8e6;
+  --link-hover:  #8ad8ee;
+  --code-text:   #f0c987;
+  --code-bg:     rgba(255, 255, 255, 0.06);
+  --pre-text:    #cfe3d6;
+  --row-alt:     rgba(255, 255, 255, 0.02);
+  // syntax tokens
+  --tok-comment: #6b7a8c;
+  --tok-keyword: #c792ea;
+  --tok-string:  #a5e07a;
+  --tok-number:  #f7a86b;
+  --tok-func:    #5cc8e6;
+  --tok-name:    #e6c07b;
+  --tok-op:      #9fb0c2;
+  --tok-error:   #ff6b6b;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg:          #ffffff;
+  --bg-glass:    rgba(255, 255, 255, 0.88);
+  --surface:     #f5f7fa;
+  --surface-2:   #f6f8fa;
+  --border:      #dde3ea;
+  --text:        #24303d;
+  --muted:       #5b6878;
+  --heading:     #0f172a;
+  --strong:      #111827;
+  --accent:      #0e8a5f;
+  --accent-08:   rgba(14, 138, 95, 0.08);
+  --accent-05:   rgba(14, 138, 95, 0.05);
+  --accent-25:   rgba(14, 138, 95, 0.30);
+  --accent-55:   rgba(14, 138, 95, 0.55);
+  --selection:   rgba(14, 138, 95, 0.20);
+  --link:        #0b6fa4;
+  --link-hover:  #08547d;
+  --code-text:   #9a4d0f;
+  --code-bg:     rgba(15, 23, 42, 0.05);
+  --pre-text:    #24292f;
+  --row-alt:     rgba(15, 23, 42, 0.025);
+  --tok-comment: #6a737d;
+  --tok-keyword: #8250df;
+  --tok-string:  #0a7a3d;
+  --tok-number:  #b35900;
+  --tok-func:    #0969da;
+  --tok-name:    #953800;
+  --tok-op:      #57606a;
+  --tok-error:   #cf222e;
+}
 
 // ---------- Base ----------
 html { -webkit-text-size-adjust: 100%; }
 
 body {
-  background: $bg;
-  color: $text;
+  background: var(--bg);
+  color: var(--text);
   font-feature-settings: "cv11", "ss01";
   -webkit-font-smoothing: antialiased;
+  transition: background-color .2s ease, color .2s ease;
 }
 
-::selection { background: rgba($accent, 0.28); color: #fff; }
+::selection { background: var(--selection); color: var(--heading); }
 
-a, a:visited { color: $link; text-decoration: none; }
-a:hover { color: lighten($link, 12%); text-decoration: underline; text-underline-offset: 3px; }
+a, a:visited { color: var(--link); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; text-underline-offset: 3px; }
 
-h1, h2, h3, h4 { color: #f1f5f9; font-weight: 700; letter-spacing: -0.01em; }
+h1, h2, h3, h4 { color: var(--heading); font-weight: 700; letter-spacing: -0.01em; }
 
-strong { color: #eef3f8; font-weight: 600; }
+strong { color: var(--strong); font-weight: 600; }
 
-hr { border: 0; border-top: 1px solid $border; margin: $spacing-unit * 1.5 0; }
+hr { border: 0; border-top: 1px solid var(--border); margin: $spacing-unit * 1.5 0; }
+
+img { border-radius: 8px; }
+.post-content img { border: 1px solid var(--border); }
+.post-content a.img-link { display: block; cursor: zoom-in; }
+.post-content a.img-link:hover img { border-color: var(--accent-55); }
 
 // ---------- Header ----------
 .site-header {
   border-top: 0;
-  border-bottom: 1px solid $border;
-  background: rgba($bg, 0.85);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-glass);
   backdrop-filter: blur(8px);
   position: sticky;
   top: 0;
   z-index: 10;
   min-height: 60px;
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
 }
 
 .site-title,
@@ -67,8 +143,9 @@ hr { border: 0; border-top: 1px solid $border; margin: $spacing-unit * 1.5 0; }
   height: 60px;
   line-height: 60px;
   letter-spacing: 0;
-  color: #f1f5f9;
-  &:hover { text-decoration: none; color: #fff; .brand-mark { background: $accent; color: $bg; } }
+  margin-right: auto;
+  color: var(--heading);
+  &:hover { text-decoration: none; color: var(--heading); .brand-mark { background: var(--accent); color: var(--bg); } }
 }
 
 .brand-mark {
@@ -76,13 +153,13 @@ hr { border: 0; border-top: 1px solid $border; margin: $spacing-unit * 1.5 0; }
   place-items: center;
   width: 30px;
   height: 30px;
-  border: 1.5px solid $accent;
+  border: 1.5px solid var(--accent);
   border-radius: 7px;
   font-family: $mono-font-family;
   font-size: 13px;
   font-weight: 600;
   line-height: 1;
-  color: $accent;
+  color: var(--accent);
   transition: background .15s ease, color .15s ease;
 }
 
@@ -95,42 +172,76 @@ hr { border: 0; border-top: 1px solid $border; margin: $spacing-unit * 1.5 0; }
 .brand-sub {
   font-family: $mono-font-family;
   font-size: 13px;
-  color: $muted;
+  color: var(--muted);
   line-height: 1;
   padding: 3px 0 3px 10px;
-  border-left: 1px solid $border;
+  border-left: 1px solid var(--border);
   @include media-query($on-palm) { display: none; }
 }
 
 .site-nav {
+  float: none;
   line-height: 60px;
 
   .page-link {
     font-family: $mono-font-family;
     font-size: 14px;
-    color: $muted;
-    &:hover { color: $accent; text-decoration: none; }
-    &.active { color: #f1f5f9; }
+    color: var(--muted);
+    &:hover { color: var(--accent); text-decoration: none; }
+    &.active { color: var(--heading); }
   }
 
   @include media-query($on-palm) {
     top: 10px;
-    background-color: $surface;
-    border-color: $border;
+    background-color: var(--surface);
+    border-color: var(--border);
     line-height: $base-line-height;
-    .menu-icon svg path { fill: $muted; }
+    .menu-icon svg path { fill: var(--muted); }
   }
+}
+
+// ---------- Theme toggle ----------
+.theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: color .15s ease, border-color .15s ease;
+
+  &:hover { color: var(--accent); border-color: var(--accent-55); }
+  &:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .icon-sun  { display: none; }
+  .icon-moon { display: block; }
+
+  // On mobile the nav collapses into the burger at the right edge; keep clear of it.
+  @include media-query($on-palm) { margin-right: 44px; }
+}
+
+// In dark mode the button offers "go light" (sun); in light mode it offers "go dark" (moon).
+:root[data-theme="dark"] .theme-toggle,
+:root:not([data-theme]) .theme-toggle {
+  .icon-sun  { display: block; }
+  .icon-moon { display: none; }
 }
 
 // ---------- Home ----------
 .home .page-heading { display: none; }   // title is only used for the nav link
 
 .home-intro {
-  color: $muted;
+  color: var(--muted);
   font-size: 17px;
   padding: $spacing-unit * 1.25 0 $spacing-unit;
   margin: 0 0 $spacing-unit;
-  border-bottom: 1px solid $border;
+  border-bottom: 1px solid var(--border);
 }
 
 .post-list-heading {
@@ -139,36 +250,36 @@ hr { border: 0; border-top: 1px solid $border; margin: $spacing-unit * 1.5 0; }
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: $muted;
+  color: var(--muted);
   margin-bottom: 16px;
 }
 
 .post-list {
   > li {
-    background: $surface;
-    border: 1px solid $border;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 10px;
     padding: 20px 24px;
     margin-bottom: 16px;
     transition: border-color .15s ease, transform .15s ease;
-    &:hover { border-color: rgba($accent, 0.55); transform: translateY(-1px); }
+    &:hover { border-color: var(--accent-55); transform: translateY(-1px); }
 
     h3 { margin: 4px 0 8px; }
-    p { color: $muted; margin-bottom: 0; font-size: 15px; }
+    p { color: var(--muted); margin-bottom: 0; font-size: 15px; }
   }
   .post-link, .post-link:visited {
     font-size: 21px;
     font-weight: 700;
     line-height: 1.35;
-    color: #f1f5f9;
-    &:hover { color: $accent; text-decoration: none; }
+    color: var(--heading);
+    &:hover { color: var(--accent); text-decoration: none; }
   }
 }
 
 .post-meta {
   font-family: $mono-font-family;
   font-size: 13px;
-  color: $muted;
+  color: var(--muted);
 }
 
 .rss-subscribe { display: none; }
@@ -178,9 +289,9 @@ hr { border: 0; border-top: 1px solid $border; margin: $spacing-unit * 1.5 0; }
   display: inline-block;
   font-family: $mono-font-family;
   font-size: 13px;
-  color: $muted !important;
+  color: var(--muted) !important;
   margin: $spacing-unit * 0.5 0 $spacing-unit * 0.75;
-  &:hover { color: $accent !important; text-decoration: none; }
+  &:hover { color: var(--accent) !important; text-decoration: none; }
 }
 
 .post-header { margin-bottom: $spacing-unit * 1.25; }
@@ -202,9 +313,9 @@ hr { border: 0; border-top: 1px solid $border; margin: $spacing-unit * 1.5 0; }
 .tag {
   font-family: $mono-font-family;
   font-size: 12px;
-  color: $accent;
-  background: rgba($accent, 0.08);
-  border: 1px solid rgba($accent, 0.25);
+  color: var(--accent);
+  background: var(--accent-08);
+  border: 1px solid var(--accent-25);
   border-radius: 999px;
   padding: 2px 10px;
   line-height: 1.6;
@@ -217,13 +328,13 @@ hr { border: 0; border-top: 1px solid $border; margin: $spacing-unit * 1.5 0; }
     font-size: 26px;
     margin-top: $spacing-unit * 1.75;
     padding-top: $spacing-unit * 0.75;
-    border-top: 1px solid $border;
+    border-top: 1px solid var(--border);
     @include media-query($on-laptop) { font-size: 23px; }
   }
   h3 {
     font-size: 19px;
     margin-top: $spacing-unit * 1.25;
-    &::before { content: "▸ "; color: $accent; }
+    &::before { content: "▸ "; color: var(--accent); }
     @include media-query($on-laptop) { font-size: 18px; }
   }
   // headings right after a divider don't need a second line
@@ -242,23 +353,23 @@ code, pre {
 code {
   font-family: $mono-font-family;
   font-size: 0.86em;
-  color: #f0c987;
-  background: rgba(#fff, 0.06);
-  border: 1px solid $border;
+  color: var(--code-text);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
   border-radius: 5px;
   padding: 1px 6px;
 }
 
 pre, .highlight {
-  background: $surface-2 !important;
+  background: var(--surface-2) !important;
 }
 
 pre {
   font-family: $mono-font-family;
   font-size: 13.5px;
   line-height: 1.6;
-  color: #cfe3d6;
-  border: 1px solid $border;
+  color: var(--pre-text);
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 16px 18px;
   overflow-x: auto;
@@ -288,7 +399,7 @@ div.highlighter-rouge {
     font-size: 11px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: $accent;
+    color: var(--accent);
     z-index: 1;
   }
   &.language-kql::before { content: "KQL"; }
@@ -300,19 +411,19 @@ div.highlighter-rouge {
   &.language-plaintext::before, &.language-text::before { content: none; }
 }
 
-// Minimal dark token colours for languages Rouge can highlight
+// Token colours for languages Rouge can highlight
 .highlight {
-  color: #cfe3d6;
-  .c, .c1, .cm, .cs, .cp { color: #6b7a8c; font-style: italic; }
-  .k, .kd, .kn, .kp, .kr, .kt, .ow { color: #c792ea; font-weight: 400; }
-  .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sr { color: #a5e07a; }
-  .m, .mf, .mh, .mi, .mo, .il { color: #f7a86b; }
-  .nf, .fm, .nb, .bp { color: #5cc8e6; }
-  .na, .nc, .no, .nd, .ni, .ne, .nn, .nt, .nv, .vc, .vg, .vi { color: #e6c07b; }
-  .o, .p { color: #9fb0c2; }
-  .err { color: #ff6b6b; background: none; }
-  .gd { color: #ff6b6b; background: none; }
-  .gi { color: #a5e07a; background: none; }
+  color: var(--pre-text);
+  .c, .c1, .cm, .cs, .cp { color: var(--tok-comment); font-style: italic; }
+  .k, .kd, .kn, .kp, .kr, .kt, .ow { color: var(--tok-keyword); font-weight: 400; }
+  .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sr { color: var(--tok-string); }
+  .m, .mf, .mh, .mi, .mo, .il { color: var(--tok-number); }
+  .nf, .fm, .nb, .bp { color: var(--tok-func); }
+  .na, .nc, .no, .nd, .ni, .ne, .nn, .nt, .nv, .vc, .vg, .vi { color: var(--tok-name); }
+  .o, .p { color: var(--tok-op); }
+  .err { color: var(--tok-error); background: none; }
+  .gd { color: var(--tok-error); background: none; }
+  .gi { color: var(--tok-string); background: none; }
 }
 
 // ---------- Tables ----------
@@ -322,21 +433,21 @@ div.highlighter-rouge {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  border: 1px solid $border;
+  border: 1px solid var(--border);
   border-radius: 10px;
-  color: $text;
+  color: var(--text);
   font-size: 15px;
   margin-bottom: $spacing-unit;
 
   th, td {
     border: 0;
-    border-bottom: 1px solid $border;
+    border-bottom: 1px solid var(--border);
     padding: 10px 14px;
     vertical-align: top;
   }
   th {
-    background: $surface;
-    color: #f1f5f9;
+    background: var(--surface);
+    color: var(--heading);
     font-weight: 600;
     font-size: 13px;
     font-family: $mono-font-family;
@@ -344,7 +455,8 @@ div.highlighter-rouge {
     letter-spacing: 0.04em;
     white-space: nowrap;
   }
-  tr:nth-child(even) { background: rgba(#fff, 0.02); }
+  tr { background: transparent; }
+  tr:nth-child(even) { background: var(--row-alt); }
   tr:last-child td { border-bottom: 0; }
 }
 
@@ -353,9 +465,9 @@ blockquote {
   font-style: normal;
   font-size: 15px;
   letter-spacing: 0;
-  color: $text;
-  background: rgba($accent, 0.05);
-  border-left: 3px solid $accent;
+  color: var(--text);
+  background: var(--accent-05);
+  border-left: 3px solid var(--accent);
   border-radius: 0 10px 10px 0;
   padding: 14px 20px;
   margin: 0 0 $spacing-unit;
@@ -365,11 +477,11 @@ blockquote {
 
 // ---------- Footer ----------
 .site-footer {
-  border-top: 1px solid $border;
+  border-top: 1px solid var(--border);
   padding: $spacing-unit 0;
   font-family: $mono-font-family;
   font-size: 13px;
-  color: $muted;
+  color: var(--muted);
   margin-top: $spacing-unit * 2;
 
   .footer-row {
@@ -382,8 +494,8 @@ blockquote {
   .social-icons { margin: 0; }
   .social-icons a { width: 32px; height: 32px; }
   .social-icons svg { width: 16px; height: 16px; }
-  a, a:visited { color: $muted; }
-  a:hover { color: $accent; text-decoration: none; }
+  a, a:visited { color: var(--muted); }
+  a:hover { color: var(--accent); text-decoration: none; }
 }
 
 // ---------- Social icon links ----------
@@ -400,15 +512,15 @@ blockquote {
     place-items: center;
     width: 40px;
     height: 40px;
-    border: 1px solid $border;
+    border: 1px solid var(--border);
     border-radius: 10px;
-    background: $surface;
-    color: $muted;
+    background: var(--surface);
+    color: var(--muted);
     transition: color .15s ease, border-color .15s ease, transform .15s ease;
   }
   a:hover {
-    color: $accent;
-    border-color: rgba($accent, 0.6);
+    color: var(--accent);
+    border-color: var(--accent-55);
     transform: translateY(-1px);
     text-decoration: none;
   }
