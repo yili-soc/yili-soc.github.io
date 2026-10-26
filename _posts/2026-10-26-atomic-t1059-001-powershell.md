@@ -6,10 +6,6 @@ tags: [atomic red team, detection, Execution, Microsoft Defender for Endpoint, K
 excerpt: "Atomic tests 13 and 15 for T1059.001: what MDE alerted on, how I triaged it, and a detection."
 ---
 
-## What this technique is
-
-Attackers use PowerShell to run commands and scripts on Windows, often hiding the command in a Base64 `-EncodedCommand` argument.
-
 **ATT&CK:** [T1059.001](https://attack.mitre.org/techniques/T1059/001/) PowerShell (Execution). Parent: [T1059](https://attack.mitre.org/techniques/T1059/) Command and Scripting Interpreter.
 
 > **Disclaimer**
@@ -22,7 +18,7 @@ Attackers use PowerShell to run commands and scripts on Windows, often hiding th
 
 ## The test
 
-Atomic tests 13 and 15 use Red Canary's AtomicTestHarnesses (ATH) module to start a new PowerShell process that runs `Write-Host <guid>`. Test 13 passes the command in plain text with `-C` (`-Command`). Test 15 passes it Base64-encoded with `-E` (`-EncodedCommand`).
+Atomic tests 13 and 15 use Red Canary's AtomicTestHarnesses (ATH) module to start a new PowerShell process that runs `Write-Host <guid>`. Test 13 passes the command in plain text with `-C`, test 15 Base64-encoded with `-E`.
 
 **Reproduce:**
 
@@ -53,7 +49,7 @@ A test that prints a GUID has nothing to do with LSASS, so that alert was the fi
 
 ### Where it started
 
-The process tree starts with `explorer.exe` launching `powershell.exe` (PID 12520) at 7:36 AM, an interactive shell opened from the desktop. `DeviceLogonEvents` showed a local interactive logon and no remote logon before it.
+The process tree starts with `explorer.exe` launching `powershell.exe` (PID 12520) at 7:36 AM. `DeviceLogonEvents` showed a local interactive logon and no remote logon before it.
 
 Under that shell is a long list of "powershell.exe executed a script" events. That was too many to open one by one, so I moved to advanced hunting.
 
@@ -91,7 +87,7 @@ DeviceProcessEvents
 
 ![16 items returned](/assets/images/atomic-t1059-001/clean-16-rows.png)
 
-PIDs change after a reboot. In a saved query, use `InitiatingProcessParentFileName !~ "senseir.exe"` instead of the PID.
+In a saved query, use `InitiatingProcessParentFileName !~ "senseir.exe"` instead of the PID.
 
 ### Reading the 16 rows
 
@@ -102,11 +98,11 @@ In order:
 - ATH's `Out-ATHPowerShellCommandLineParameter` wrapper, once per test
 - the two test payloads
 
-The payloads' parent is `wmiprvse.exe`, not the shell that ran the test. ATH's help text for `Out-ATHPowerShellCommandLineParameter` says `-Execute` starts the command "with the WMI Win32_Process Create method". That is what the two WMI alerts fired on, and MDE maps them to T1047 Windows Management Instrumentation. Malware does the same to break the link between its script and the new process.
+The payloads' parent is `wmiprvse.exe`, not the shell that ran the test. ATH's help text for `Out-ATHPowerShellCommandLineParameter` says `-Execute` starts the command "with the WMI Win32_Process Create method". That is what the two WMI alerts fired on, and MDE maps them to T1047 Windows Management Instrumentation.
 
 ### Decoding test 15
 
-In CyberChef: `From Base64`, then `Decode text` with UTF-16LE (1200), because `-EncodedCommand` is UTF-16LE.
+In CyberChef: `From Base64`, then `Decode text` with UTF-16LE (1200).
 
 ![CyberChef recipe From Base64 plus Decode text UTF-16LE, output Write-Host 1bf05df6-eff9-415a-9e65-d24194b110a9](/assets/images/atomic-t1059-001/cyberchef-decoded.png)
 
@@ -116,7 +112,7 @@ It is the same `Write-Host` as test 13 with a different GUID. MDE raised the sam
 
 ## The LsassDumper alert
 
-None of the 16 processes touched LSASS. The alert title ends with "prevented from executing via AMSI", so I looked up AMSI. Microsoft describes it as an API that passes content to the antivirus for scanning, and PowerShell 5.1 and later sends every script block to it. So this was a scan of script content, not a process, and I searched `DeviceEvents`:
+None of the 16 processes touched LSASS. The alert was raised by an AMSI scan of script content, not by a process, so I searched `DeviceEvents`:
 
 ```kql
 DeviceEvents
@@ -181,7 +177,7 @@ It returned the two test payloads. It covers PowerShell (T1059.001) started thro
 - `contains "wmi"` also matches names like `wmic.exe`. For a scheduled rule, use `=~ "wmiprvse.exe"`.
 - Add a command-line condition (encoded command, download cradle, hidden window) to cut the volume.
 
-This only works when the payload is on the command line. With `-File` or `IEX` on a downloaded script, the code is in the script block, and advanced hunting doesn't store full script text. For that you need Script Block Logging (event 4104) in Sentinel.
+This only catches payloads on the command line. For `-File` or `IEX` on a downloaded script, advanced hunting doesn't keep the full script text, so you need Script Block Logging (4104) in Sentinel.
 
 ---
 
@@ -200,5 +196,4 @@ When excluding noise, exclude the whole subtree. Filtering on the parent alone l
 - [MITRE ATT&CK T1059.001](https://attack.mitre.org/techniques/T1059/001/)
 - [MITRE ATT&CK T1047](https://attack.mitre.org/techniques/T1047/)
 - [Microsoft Learn: Antimalware Scan Interface (AMSI)](https://learn.microsoft.com/windows/win32/amsi/antimalware-scan-interface-portal)
-- [Microsoft Learn: PowerShell security features (AMSI support)](https://learn.microsoft.com/powershell/scripting/security/security-features)
 - [Microsoft Learn: DeviceEvents table](https://learn.microsoft.com/defender-xdr/advanced-hunting-deviceevents-table)
