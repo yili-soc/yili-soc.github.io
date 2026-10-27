@@ -1,10 +1,13 @@
 # One entry per series. Each post sets `series:` to one of these ids.
 - id: atomic-red-team
   name: Atomic Red Team
+  short: One ATT&CK technique per post, run in my lab.
   description: One ATT&CK technique per post, run in my lab, with what MDE saw and the detection I wrote.
 - id: research
   name: Research
+  short: Real attacks, reproduced and hunted.
   description: Real-world attacks I reproduce or analyze, with hunting queries.
 - id: conference-notes
   name: Conference Notes
+  short: Detection ideas from security talks.
   description: Detection write-ups based on conference talks.
