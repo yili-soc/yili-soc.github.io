@@ -258,7 +258,6 @@ img { border-radius: 8px; }
     font-size: 13px;
     color: var(--muted);
     opacity: 0.75;
-    &::before { content: "— "; }
   }
 }
 
