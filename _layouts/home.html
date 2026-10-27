@@ -7,18 +7,8 @@ layout: default
   {%- endif -%}
 
   {%- assign posts = site.posts -%}
-  <div class="home-grid">
-    <div class="home-head">{{ content }}</div>
-    <nav class="series-nav" aria-label="Series">
-      <p class="series-nav-heading"><span class="dot" aria-hidden="true"></span>Series</p>
-      <button type="button" class="series-btn is-active" data-series="all">All</button>
-      {%- for s in site.data.series -%}
-        {%- assign n = posts | where: "series", s.id | size -%}
-        {%- if n > 0 -%}
-        <button type="button" class="series-btn" data-series="{{ s.id }}">{{ s.name | escape }}</button>
-        {%- endif -%}
-      {%- endfor -%}
-    </nav>
+  {{ content }}
+  <div class="home-list">
 
     <div class="home-posts">
       <h2 class="post-list-heading" id="list-heading">{{ page.list_title | default: "Posts" }}</h2>
@@ -53,7 +43,7 @@ layout: default
         {%- endfor -%}
       };
       var listTitle = {{ page.list_title | default: "Posts" | jsonify }};
-      var buttons = document.querySelectorAll(".series-btn");
+      var buttons = document.querySelectorAll(".nav-sub");
       var items = document.querySelectorAll(".post-list > li");
       var heading = document.getElementById("list-heading");
       var desc = document.getElementById("series-desc");
@@ -67,15 +57,15 @@ layout: default
         desc.textContent = id === "all" ? "" : series[id].desc;
       }
 
-      buttons.forEach(function (b) {
-        b.addEventListener("click", function () {
-          var id = b.dataset.series;
-          history.replaceState(null, "", id === "all" ? location.pathname : "#" + id);
-          show(id);
-        });
-      });
       show(location.hash.slice(1) || "all");
-      window.addEventListener("hashchange", function () { show(location.hash.slice(1) || "all"); });
+      window.addEventListener("hashchange", function () {
+        show(location.hash.slice(1) || "all");
+        // Close the dropdown (desktop) and the burger menu (mobile) after picking a series.
+        if (document.activeElement) document.activeElement.blur();
+        var trig = document.getElementById("nav-trigger");
+        if (trig) trig.checked = false;
+        window.scrollTo(0, 0);
+      });
     })();
   </script>
 </div>
