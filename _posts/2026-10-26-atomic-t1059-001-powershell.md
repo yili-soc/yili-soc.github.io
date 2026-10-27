@@ -4,7 +4,7 @@ title: "Atomic T1059.001: PowerShell"
 date: 2026-10-26 12:00:00 -0600
 tags: [atomic red team, detection, Execution, Microsoft Defender for Endpoint, KQL]
 excerpt: "Atomic tests 13 and 15 for T1059.001: what MDE alerted on, how I triaged it, and a detection."
-series: home-lab
+series: atomic-red-team
 label: "T1059.001 · Execution"
 ---
 

@@ -1,7 +1,7 @@
 # One entry per series. Each post sets `series:` to one of these ids.
-- id: home-lab
-  name: Home Lab
-  description: Attacks I run in my own lab, what the EDR saw, and the detections I wrote.
+- id: atomic-red-team
+  name: Atomic Red Team
+  description: One ATT&CK technique per post, run in my lab, with what MDE saw and the detection I wrote.
 - id: research
   name: Research
   description: Real-world attacks I reproduce or analyze, with hunting queries.

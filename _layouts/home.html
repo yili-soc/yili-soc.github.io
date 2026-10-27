@@ -6,17 +6,16 @@ layout: default
     <h1 class="page-heading">{{ page.title }}</h1>
   {%- endif -%}
 
-  {{ content }}
-
   {%- assign posts = site.posts -%}
   <div class="home-grid">
+    <div class="home-head">{{ content }}</div>
     <nav class="series-nav" aria-label="Series">
-      <p class="series-nav-heading">Series</p>
-      <button type="button" class="series-btn is-active" data-series="all">All <span class="count">{{ posts.size }}</span></button>
+      <p class="series-nav-heading"><span class="dot" aria-hidden="true"></span>Series</p>
+      <button type="button" class="series-btn is-active" data-series="all">All</button>
       {%- for s in site.data.series -%}
         {%- assign n = posts | where: "series", s.id | size -%}
         {%- if n > 0 -%}
-        <button type="button" class="series-btn" data-series="{{ s.id }}">{{ s.name | escape }} <span class="count">{{ n }}</span></button>
+        <button type="button" class="series-btn" data-series="{{ s.id }}">{{ s.name | escape }}</button>
         {%- endif -%}
       {%- endfor -%}
     </nav>
