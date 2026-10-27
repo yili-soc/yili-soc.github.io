@@ -4,6 +4,8 @@ title: "Atomic T1053.005: Scheduled Task"
 date: 2026-10-27 10:00:00 -0600
 tags: [atomic red team, detection, Persistence, Microsoft Defender for Endpoint, KQL]
 excerpt: "Atomic test 2 for T1053.005: what MDE alerted on, what Autoruns and KAPE showed about the task, and a detection."
+series: home-lab
+label: "T1053.005 · Persistence"
 ---
 
 **ATT&CK:** [T1053.005](https://attack.mitre.org/techniques/T1053/005/) Scheduled Task (Execution, Persistence, Privilege Escalation). Parent: [T1053](https://attack.mitre.org/techniques/T1053/) Scheduled Task/Job.

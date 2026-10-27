@@ -1,0 +1,10 @@
+# One entry per series. Each post sets `series:` to one of these ids.
+- id: home-lab
+  name: Home Lab
+  description: Attacks I run in my own lab, what the EDR saw, and the detections I wrote.
+- id: research
+  name: Research
+  description: Real-world attacks I reproduce or analyze, with hunting queries.
+- id: conference-notes
+  name: Conference Notes
+  description: Detection write-ups based on conference talks.

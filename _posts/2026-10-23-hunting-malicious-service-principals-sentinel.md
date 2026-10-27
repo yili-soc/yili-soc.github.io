@@ -4,6 +4,7 @@ title: "Hunting Malicious Service Principals in Microsoft Sentinel: Notes from S
 date: 2026-10-23 12:00:00 -0600
 tags: [detection, Microsoft Sentinel, Entra ID, service principal, KQL, Storm-0940]
 excerpt: "I reproduced the core of the Storm-0940 / ConnectWise app abuse in my own tenant to see what it looks like in the logs, and whether it can be caught on behavior alone, without any IOCs."
+series: research
 ---
 
 ## Where this came from

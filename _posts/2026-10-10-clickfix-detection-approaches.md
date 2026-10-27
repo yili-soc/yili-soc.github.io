@@ -4,6 +4,7 @@ title: "ClickFix Detection: Comparing the Public Approaches"
 date: 2026-10-10 15:00:00 -0600
 tags: [BSidesEdmonton2026, detection, ClickFix, FileFix, Microsoft Defender for Endpoint, KQL]
 excerpt: "A study note on the public ways to detect ClickFix: where each one looks, which variants it covers, and when to use it."
+series: research
 ---
 
 ## 0. Introduction
