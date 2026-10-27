@@ -21,7 +21,7 @@
           {%- assign nav_label = my_page.nav_title | default: my_page.title -%}
           {%- if nav_label and path == "index.md" -%}
           <div class="nav-menu">
-            <a class="page-link{% if page.url == my_page.url %} active{% endif %}" href="{{ my_page.url | relative_url }}" aria-haspopup="true">{{ nav_label | escape }}<svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></a>
+            <a class="page-link{% if page.url == my_page.url %} active{% endif %}" href="{{ my_page.url | relative_url }}" aria-haspopup="true">{{ nav_label | escape }}<svg class="caret" width="9" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></a>
             <div class="nav-dropdown">
               <p class="nav-dropdown-heading"><span class="dot" aria-hidden="true"></span>Series</p>
               <a class="nav-sub" data-series="all" href="{{ "/" | relative_url }}#all">All articles</a>
