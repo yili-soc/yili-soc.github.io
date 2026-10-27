@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Atomic T1053.005: Scheduled Task"
-date: 2026-10-27 12:00:00 -0600
+date: 2026-10-27 10:00:00 -0600
 tags: [atomic red team, detection, Persistence, Microsoft Defender for Endpoint, KQL]
 excerpt: "Atomic test 2 for T1053.005: what MDE alerted on, what Autoruns and KAPE showed about the task, and a detection."
 ---
