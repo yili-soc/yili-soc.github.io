@@ -4,4 +4,7 @@ nav_title: Articles
 list_title: Latest
 ---
 
-<p class="home-intro">Notes on threat detection and incident response.</p>
+<figure class="home-intro">
+  <blockquote>Defenders think in lists. Attackers think in graphs. As long as this is true, attackers win.</blockquote>
+  <figcaption>John Lambert</figcaption>
+</figure>

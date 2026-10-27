@@ -237,11 +237,29 @@ img { border-radius: 8px; }
 .home .page-heading { display: none; }   // title is only used for the nav link
 
 .home-intro {
-  color: var(--muted);
-  font-size: 17px;
   padding: $spacing-unit * 1.25 0 $spacing-unit;
   margin: 0 0 $spacing-unit;
   border-bottom: 1px solid var(--border);
+
+  blockquote {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: 17px;
+    font-style: normal;
+    letter-spacing: 0;
+    color: var(--muted);
+    &::before, &::after { content: none; }
+  }
+  figcaption {
+    margin-top: 6px;
+    font-family: $mono-font-family;
+    font-size: 13px;
+    color: var(--muted);
+    opacity: 0.75;
+    &::before { content: "— "; }
+  }
 }
 
 .post-list-heading {
