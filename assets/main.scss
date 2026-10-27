@@ -151,12 +151,12 @@ img { border-radius: 8px; }
 .brand-mark {
   display: inline-grid;
   place-items: center;
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   border: 1.5px solid var(--accent);
-  border-radius: 7px;
+  border-radius: 8px;
   font-family: $mono-font-family;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   line-height: 1;
   color: var(--accent);
@@ -164,7 +164,7 @@ img { border-radius: 8px; }
 }
 
 .brand-name {
-  font-size: 18px;
+  font-size: 21px;
   font-weight: 700;
   letter-spacing: -0.01em;
 }
@@ -236,69 +236,12 @@ img { border-radius: 8px; }
 // ---------- Home ----------
 .home .page-heading { display: none; }   // title is only used for the nav link
 
-.hero {
-  padding: $spacing-unit * 1.75 0 $spacing-unit * 1.25;
-}
-.hero-title {
-  font-size: 34px;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  margin: 0 0 12px;
-  @include media-query($on-palm) { font-size: 27px; }
-}
-.hero-sub {
+.home-intro {
   color: var(--muted);
   font-size: 17px;
-  max-width: 620px;
-  margin: 0;
-  a, a:visited { color: var(--text); border-bottom: 1px solid var(--accent-55); }
-  a:hover { color: var(--accent); text-decoration: none; }
-}
-
-.series-cards {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  padding-bottom: $spacing-unit * 1.5;
-  margin-bottom: $spacing-unit * 1.25;
+  padding: $spacing-unit * 1.25 0 $spacing-unit;
+  margin: 0 0 $spacing-unit;
   border-bottom: 1px solid var(--border);
-  @include media-query($on-palm) { grid-template-columns: minmax(0, 1fr); gap: 10px; }
-}
-.series-card,
-.series-card:visited {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 16px 40px 16px 18px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  transition: border-color .15s ease, transform .15s ease;
-  &:hover { border-color: var(--accent-55); transform: translateY(-1px); text-decoration: none; }
-  &:hover .series-card-arrow { color: var(--accent); transform: translateX(2px); }
-}
-.series-card-name {
-  font-weight: 700;
-  font-size: 16px;
-  color: var(--heading);
-}
-.series-card-desc {
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--muted);
-}
-.series-card-arrow {
-  position: absolute;
-  top: 18px;
-  right: 16px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  color: var(--muted);
-  transition: color .15s ease, transform .15s ease;
 }
 
 .post-list-heading {

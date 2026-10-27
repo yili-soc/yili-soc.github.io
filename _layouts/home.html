@@ -9,16 +9,6 @@ layout: default
   {%- assign posts = site.posts -%}
   {{ content }}
 
-  <div class="series-cards">
-    {%- for s in site.data.series -%}
-    <a class="series-card" href="#{{ s.id }}">
-      <span class="series-card-name">{{ s.name | escape }}</span>
-      <span class="series-card-desc">{{ s.short | escape }}</span>
-      <svg class="series-card-arrow" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-    </a>
-    {%- endfor -%}
-  </div>
-
   <div class="home-list">
 
     <div class="home-posts">
