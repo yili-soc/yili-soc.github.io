@@ -137,6 +137,14 @@ Two things to watch with this file. First, `<Author>` and `<Date>` are just fiel
 
 Second, the time. The XML says 06:37:34 and MDE shows 7:37:34 for the same event. `<Date>` has no time zone. It is written in the VM's local time, while the Defender portal shows times in the zone set in its settings. Line the two up before you build a timeline.
 
+### Autoruns or KAPE
+
+They do different jobs. Autoruns is for a live host when you need a quick answer: what starts automatically on this machine right now. It covers tasks, Run keys, services, WMI subscriptions and more in one view, and it's the fastest way to confirm a cleanup worked. It only shows current state, and only for the host you're on. To use it across many hosts, run `autorunsc` from the command line, export to CSV, and diff against a known-good baseline.
+
+KAPE is for keeping evidence. It copies the raw files with their metadata, so the analysis can happen later, on another machine, after the host has been reimaged. It doesn't tell you what's suspicious. You still have to read or parse what it collected. For one quick question on one host it's more than you need. When the case may go to legal, or the host is about to be wiped, it's the one to run.
+
+With MDE in place, neither one is how you find the creation. Process telemetry already shows who, when and how. They matter when that telemetry is missing: a client onboarded with no EDR, data past the retention window, or a task created before the agent was installed. In those cases the task file on disk is all you have.
+
 ---
 
 ## Detection
